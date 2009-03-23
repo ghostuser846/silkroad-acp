@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <title>SilkRoad ACP</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <script type="text/javascript" src="./js/jquery-1.3.2.min.js"></script>
+        <script type="text/javascript" src="./js/jquery-ui-1.7.1.custom.min.js"></script>
+        <style type="text/css">
+            body {
+                background-color: grey;
+            }
+            #chains_container {
+                border: 4px inset black;
+                width: 75%;
+                position: relative;
+                background-color: white;
+                left: 12.5%;
+            }
+            .chain_container {
+                border: 2px solid blue;
+                text-align: center;
+                background-color: white;
+                cursor: move;
+            }
+            .message_container {
+                border: 3px double red;
+                text-align: center;
+                background-color: white;
+            }
+            #form_container {
+                border: 4px solid red;
+                width: 75%;
+                position: relative;
+                left: 12.5%;
+                text-align: center;
+                background-color: white;
+            }
+            .button {
+                float: left;
+                margin: 2px;
+                padding: 2px;
+                border: 3px solid black;
+                cursor: pointer;
+                background-color: white;
+            }
+            .button_action {
+                float: left;
+                margin: 2px;
+                padding: 2px;
+                border: 3px solid black;
+                cursor: pointer;
+                background-color: blue;
+            }
+            .clear {
+                clear: both;
+            }
+            .td_delete_chain {
+                color: red;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <script type="text/javascript">
+            $(document).ready(function(e) {
+                $("#form_add, #button_add_cancel, #button_add_ok").toggle("fast");
+                // Initializing the sortable DIV
+                $("#chains_container").sortable();
+                $("#chains_container").disableSelection();
+                $("#chains_container").bind("sortupdate", function(event, ui) {
+                    alert("Chains were modified");
+                });
+                $("#form_container div.button").bind("mouseenter", function(e) {
+                    $(this).css("background-color", "yellow");
+                });
+                $("#form_container div.button").bind("mouseleave", function(e) {
+                    $(this).css("background-color", "white");
+                });
+                $("#form_container div.button_action").bind("mouseenter", function(e) {
+                    $(this).css("background-color", "red");
+                });
+                $("#form_container div.button_action").bind("mouseleave", function(e) {
+                    $(this).css("background-color", "blue");
+                });
+                $("#form_container div#button_get").bind("click", function(e) {
+                    $("#chains_container div").remove();
+                    $("#chains_container").prepend("<div class=\"message_container\">loading ...</div>");
+                    $.post("./php/get_test_chains.php", {
+                            action: "get_chains"
+                        }, function(xml) {
+                            build_chains(xml);
+                    });
+                });
+                $("#form_container div#button_add").bind("click", function(e) {
+                    $("#form_container").prepend("<div class=\"message_container\">loading ...</div>");
+                    $.post("./php/get_test_chains.php", {
+                            action: "get_data_for_add"
+                        }, function(xml) {
+                            build_form_add(xml);
+                            $("#form_container div.message_container").remove();
+                    });
+                });
+                $("#button_add_cancel").bind("click", function(e) {
+                    $("#form_add, #button_add_cancel, #button_add_ok").toggle("fast");
+                    $(".button").toggle("fast");
+                    $("#form_container #form_add select.form_add_select option").remove();
+                });
+                $("#button_add_ok").bind("click", function(e) {
+                    $.post("./php/get_test_chains.php", {
+                            action: "add_chain",
+                            machine: $("#add_form_machine").val(),
+                            testplan: $("#add_form_testplan").val(),
+                            config: $("#add_form_config").val(),
+                            iscompleted: $("#add_form_iscompleted").val()
+                        }, function(xml) {
+                            if (is_ok(xml)) alert("Chain was added successfully");
+                            else alert("Error while adding new chain");
+                    });
+                    $("#form_add, #button_add_cancel, #button_add_ok").toggle("fast");
+                    $(".button").toggle("fast");
+                    $("#form_container #form_add select.form_add_select option").remove();
+                    $("#form_container div#button_get").trigger("click");
+                });
+                $("span.td_delete_chain").bind("click", function(e) {
+                    alert("td");
+                    var retval = confirm("Are you sure you want to delete this chain?");
+                    if (retval) alert("ok");
+                    else alert("cancel");
+                });
+            });
+            // Insert chains into sortable DIV
+            function build_chains(xml) {
+                var accumulator = "";
+                $("Chain", xml).each(function(id) {
+                    var chain = $("Chain", xml).get(id);
+                    accumulator += "<div class=\"chain_container\">" + 
+                        "<table width=\"100%\"><tr>" + 
+                        "<td width=\"10%\">" + $("ID", chain).text() + "</td>" + 
+                        "<td width=\"30%\"><b>" + $("Name", chain).text() + "</b></td>" + 
+                        "<td width=\"20%\">" + $("Machine", chain).text() + "</td>" + 
+                        "<td width=\"20%\">" + $("Config", chain).text() + "</td>" + 
+                        "<td width=\"10%\">" + $("IsCompleted", chain).text() + "</td>" + 
+                        "<td width=\"10%\"><span class=\"td_delete_chain\">X</span></td>" + 
+                        "</tr></table></div>";
+                });
+                $("#chains_container div").remove();
+                $("#chains_container").prepend(accumulator);
+            }
+            function build_form_add(xml) {
+                $("#form_container #form_add select.form_add_select option").remove();
+                $("Machines Element", xml).each(function(id) {
+                    var element = $("Machines Element", xml).get(id);
+                    $("#add_form_machine").append("<option value=\"" + $("ID", element).text() + "\">" + 
+                        $("Name", element).text() + "</option>");
+                });
+                $("TestPlans Element", xml).each(function(id) {
+                    var element = $("TestPlans Element", xml).get(id);
+                    $("#add_form_testplan").append("<option value=\"" + $("ID", element).text() + "\">" + 
+                        $("Name", element).text() + "</option>");
+                });
+                $("Configurations Element", xml).each(function(id) {
+                    var element = $("Configurations Element", xml).get(id);
+                    $("#add_form_config").append("<option value=\"" + $("ID", element).text() + "\">" + 
+                        $("Name", element).text() + "</option>");
+                });
+                $("#add_form_iscompleted").append("<option value=\"0\">0</option><option value=\"1\">1</option>");
+                $("#form_add, #button_add_cancel, #button_add_ok").toggle("slow");
+                $(".button").toggle("fast");
+            }
+            function is_ok(xml) {
+                if ($("Status", xml).text() == "OK")
+                    return true;
+                return false;
+            }
+        </script>
+        <div id="form_container">
+            <div id="button_get" class="button">Get 'Em!!</div>
+            <div id="button_add" class="button">Add new Chain</div>
+            <div id="button_add_ok" class="button_action">OK</div>
+            <div id="button_add_cancel" class="button_action">Cancel</div>
+            <div class="button">Test</div>
+            <div class="clear"></div>
+            <div id="form_add">
+                Machine
+                <select id="add_form_machine" class="form_add_select"></select>
+                Testplan
+                <select id="add_form_testplan" class="form_add_select"></select>
+                Config
+                <select id="add_form_config" class="form_add_select"></select>
+                IsCompleted
+                <select id="add_form_iscompleted" class="form_add_select"></select>
+            </div>
+        </div>
+        <div id="chains_container">
+            <div class="message_container">Nothing to show</div>
+        </div>
+    </body>
+</html>
+
