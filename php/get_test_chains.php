@@ -1,11 +1,14 @@
 <?php
+    session_start();
+    if (!isset($_SESSION["silkroad_host"]) || !isset($_SESSION["silkroad_login"]) || !isset($_SESSION["silkroad_pass"]))
+        header("Location: ../index.html");
     error_reporting(E_ALL);
     header("Content-type: text/xml");
     header("Cache-Control: no-cache");
 
-    $db_host = "psslab441";
-    $db_user = "root";
-    $db_pwd = "root";
+    $db_host = $_SESSION["silkroad_host"];
+    $db_user = $_SESSION["silkroad_login"];
+    $db_pwd = $_SESSION["silkroad_pass"];
     $database = "silkroad";
     $table_tpnames = "testplan_names";
     $table_testchains = "testchains";
