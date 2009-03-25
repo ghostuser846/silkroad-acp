@@ -1,8 +1,10 @@
 <?php
     session_start();
-    require("./smarty_silkroadacp.php");    
-    if (!isset($_SESSION["silkroad_host"]) || !isset($_SESSION["silkroad_login"]) || !isset($_SESSION["silkroad_pass"]))
+    //require("./session.php");
+    if (!isset($_SESSION["silkroad_host"])) {
         header("Location: ../index.html");
+    }
+    require("./smarty_silkroadacp.php");
     $smarty = new SmartySilkRoadACP();
     $smarty->assign("app_page_name", "Chains");
     $smarty->assign("js_scripts", array("jquery-1.3.2.min.js", "jquery-ui-1.7.1.custom.min.js", "events_handlers.js", "init_and_events.js"));
