@@ -4,6 +4,4 @@
             {include file="body_chains.tpl"}
         {/if}
     {/foreach}
-</body>
-</html>
 
