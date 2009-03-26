@@ -7,7 +7,7 @@
             $this->compile_dir = "./templates/templates_c";
             $this->config_dir = "./templates/configs";
             $this->cache_dir = "./templates/cache";
-            $this->caching = true;
+            //$this->caching = true;
             $this->assign("app_name", "SilkRoad ACP");
         }
     }

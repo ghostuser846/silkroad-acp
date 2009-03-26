@@ -1,7 +1,7 @@
 <?php
     session_start();
     if (!isset($_SESSION["silkroad_host"]) || !isset($_SESSION["silkroad_login"]) || !isset($_SESSION["silkroad_pass"]))
-        header("Location: ../index.html");
+        header("Location: ../index.php");
     error_reporting(E_ALL);
     header("Content-type: text/xml");
     header("Cache-Control: no-cache");
