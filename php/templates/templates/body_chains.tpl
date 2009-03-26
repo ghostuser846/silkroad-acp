@@ -15,8 +15,8 @@
         IsCompleted
         <select id="add_form_iscompleted" class="form_add_select"></select>
         </div>
-    </div>
-    <div id="chains_container">
-        <div class="message_container">Nothing to show</div>
-    </div>
+</div>
+<div id="chains_container">
+    <div class="message_container">Nothing to show</div>
+</div>
 

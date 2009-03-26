@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.22, created on 2009-03-25 21:56:16
+<?php /* Smarty version 2.6.22, created on 2009-03-26 06:20:11
          compiled from body_chains.tpl */ ?>
 <div id="form_container">
     <div id="button_get" class="button">Get 'Em!!</div>
@@ -17,8 +17,8 @@
         IsCompleted
         <select id="add_form_iscompleted" class="form_add_select"></select>
         </div>
-    </div>
-    <div id="chains_container">
-        <div class="message_container">Nothing to show</div>
-    </div>
+</div>
+<div id="chains_container">
+    <div class="message_container">Nothing to show</div>
+</div>
 
