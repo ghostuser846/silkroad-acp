@@ -21,14 +21,6 @@
         $$key = mysql_real_escape_string($value, $link);
     mysql_select_db($database, $link) or die("Can't select database: " . mysql_error());
     if ($action == "get_chains") {
-        /*$result = mysql_query("select tc.id, tpn.name, tc.is_completed 
-            from {$table_testchains} tc inner join {$table_tpnames} tpn 
-            on tc.testplanid = tpn.id 
-            order by tc.id asc;", $link);*/
-        /*$result = mysql_query("select tc.id, tpn.name, m.name, c.name, tc.is_completed
-            from {$table_testchains} tc, {$table_machines} m, {$table_tpnames} tpn, {$table_configurations} c
-            where tc.machineid = m.id and tc.testplanid = tpn.id and tc.configid = c.id
-            order by tc.id asc;", $link);*/
         $query_chains_not_running = "select tc.id, tpn.name, m.name, c.name, tc.is_completed
                                     from {$table_testchains} tc, {$table_machines} m, {$table_tpnames} tpn,  {$table_configurations} c
                                         where tc.machineid = m.id
@@ -128,10 +120,106 @@
         if (!$result) {
             echo "\t<Status>Fail</Status>\n";
             echo "</RootElement>\n";
-            die("Query to insert fields into table failed: " . mysql_error());
+            //die("Query to insert fields into table failed: " . mysql_error());
+            exit;
         }
         echo "\t<Status>OK</Status>\n";
         echo "</RootElement>\n";
+    }
+    if ($action == "delete_all") {
+        $result = mysql_query("truncate {$table_testchains};", $link);
+        echo "<?xml version=\"1.0\"?>\n";
+        echo "<RootElement>\n";
+        if (!$result) {
+            echo "\t<Status>Fail</Status>\n";
+            echo "</RootElement>\n";
+            //die("Can't truncate {$table_testchains}: " . mysql_error());
+            exit;
+        }
+        echo "\t<Status>OK</Status>\n";
+        echo "</RootElement>\n";
+    }
+    if ($action == "delete_not_running") {
+        $query = "delete from {$table_testchains}
+                    where ({$table_testchains}.machineid, {$table_testchains}.testplanid) not in
+                        (select distinct first_join.machineid, {$table_testplans}.testplanid
+                        from {$table_testplans} join
+                                (select {$table_testcases}.id, {$table_tcchains}.machineid
+                                from {$table_tcchains} join {$table_testcases}
+                                    on {$table_tcchains}.testcase = {$table_testcases}.testcase) first_join
+                            on {$table_testplans}.testcaseid = first_join.id);";
+        $result = mysql_query($query, $link);
+        echo "<?xml version=\"1.0\"?>\n";
+        echo "<RootElement>\n";
+        if (!$result) {
+            echo "\t<Status>Fail</Status>\n";
+            echo "</RootElement>\n";
+            //die("Query to insert fields into table failed: " . mysql_error());
+            exit;
+        }
+        echo "\t<Status>OK</Status>\n";
+        echo "</RootElement>\n";
+    }
+    if ($action == "delete_following") {
+        $result = mysql_query("delete from {$table_testchains} where id in ({$chains});", $link);
+        echo "<?xml version=\"1.0\"?>\n";
+        echo "<RootElement>\n";
+        if (!$result) {
+            echo "\t<Status>Fail</Status>\n";
+            echo "</RootElement>\n";
+            //die("Can't truncate {$table_testchains}: " . mysql_error());
+            exit;
+        }
+        echo "\t<Status>OK</Status>\n";
+        echo "</RootElement>\n";
+    }
+    if ($action == "rotate_chains") {
+        // getting current state of table
+        // array contains all chains except the running chains
+        // keys are ids and values are arrays of data
+        $current_content = array();
+        // keys of this array are ids of not running chains
+        // and values are new ids
+        $mapping_between_current_and_rotation = array();
+
+        $temp = array();
+        // explode POST data (new sequence of ids)
+        $new_rotation_arr = explode(",", $rotations);
+        
+        $query = "select * from {$table_testchains}
+                    where ({$table_testchains}.machineid, {$table_testchains}.testplanid) not in
+                        (select distinct first_join.machineid, {$table_testplans}.testplanid
+                        from {$table_testplans} join
+                                (select {$table_testcases}.id, {$table_tcchains}.machineid
+                                from {$table_tcchains} join {$table_testcases}
+                                    on {$table_tcchains}.testcase = {$table_testcases}.testcase) first_join
+                            on {$table_testplans}.testcaseid = first_join.id);";
+        $result = mysql_query($query, $link);
+        if (!$result) {
+            die("Can't fetch data from {$table_testchains}: " . mysql_error());
+        }
+        while ($chain = mysql_fetch_array($result)) {
+            // fill current data
+            $current_content[$chain[0]] = $chain;
+            // $temp contains current sequence of ids
+            $temp[] = $chain[0];
+        }
+        if (count($temp) != count($new_rotation_arr)) {
+            die("They are not equal!!");
+        } else {
+            // build mapping
+            for ($i = 0; $i < count($new_rotation_arr); $i++)
+                $mapping_between_current_and_rotation[$temp[$i]] = $new_rotation_arr[$i];
+        }
+        foreach ($mapping_between_current_and_rotation as $key => $value)
+            // if mapped ids are not equal than they are under rotation
+            // so, rotate them
+            // former id ($key) should contain new data from $value id
+            if ($key != $value) {
+                $result = mysql_query("update {$table_testchains} set machineid = {$current_content[$value][1]}, 
+                    testplanid = {$current_content[$value][2]}, configid = {$current_content[$value][3]}, 
+                    is_completed = {$current_content[$value][4]} where id = {$key};", $link);
+            }
     }
     mysql_close($link);
 ?>

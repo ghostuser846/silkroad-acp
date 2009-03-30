@@ -4,6 +4,8 @@
     <div id="button_add_ok" class="button_action">OK</div>
     <div id="button_add_cancel" class="button_action">Cancel</div>
     <div id="button_delete" class="button">Delete</div>
+    <div id="button_delete_all" class="button">Delete All</div>
+    <div id="button_accept_rotations" class="button">Accept/Deny Rotations</div>
     <div class="clear"></div>
     <div id="form_add">
         Machine

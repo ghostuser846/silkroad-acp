@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.22, created on 2009-03-30 00:22:13
+<?php /* Smarty version 2.6.22, created on 2009-03-30 07:20:20
          compiled from body_chains.tpl */ ?>
 <div id="form_container">
     <div id="button_get" class="button">Get 'Em!!</div>
@@ -6,6 +6,8 @@
     <div id="button_add_ok" class="button_action">OK</div>
     <div id="button_add_cancel" class="button_action">Cancel</div>
     <div id="button_delete" class="button">Delete</div>
+    <div id="button_delete_all" class="button">Delete All</div>
+    <div id="button_accept_rotations" class="button">Accept/Deny Rotations</div>
     <div class="clear"></div>
     <div id="form_add">
         Machine
