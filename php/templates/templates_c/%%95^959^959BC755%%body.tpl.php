@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.22, created on 2009-03-26 08:54:35
+<?php /* Smarty version 2.6.22, created on 2009-03-30 00:09:51
          compiled from body.tpl */ ?>
 <body>
     <?php $_from = $this->_tpl_vars['bodies']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }if (count($_from)):

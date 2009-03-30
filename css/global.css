@@ -1,6 +1,7 @@
 .page_footer {
     text-align: right;
     font-style: italic;
+    margin: 10px;
 }
 .login_page_form {
     border: 3px solid black;
@@ -25,10 +26,9 @@
     margin: 0 10px 10px 10px;
 }
 #body_keeper {
-    border-left: 3px solid black;
-    border-right: 3px solid black;
-    border-top: 3px solid black;
+    border: 3px solid black;
     margin: 0 10px 10px 10px;
+    padding: 5px;
 }
 .space_with_page_name {
     text-align: left;
@@ -36,5 +36,9 @@
     padding: 5px;
     font: 15pt times;
     font-style: italic;
+}
+#session_data_and_logout {
+    text-align: right;
+    margin: 0 10px 10px 10px;
 }
 

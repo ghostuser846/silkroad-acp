@@ -1,21 +1,32 @@
 <?php
-    session_start();
-    foreach ($_POST as $key => $value)
-        $$key = $value;
-    $link = mysql_connect($silkroad_host, $silkroad_login, $silkroad_pass);
-    if ($link != false) {
-        if (mysql_select_db("silkroad", $link)) {
-            mysql_close($link);
-            $_SESSION["silkroad_host"] = $silkroad_host;
-            $_SESSION["silkroad_login"] = $silkroad_login;
-            $_SESSION["silkroad_pass"] = $silkroad_pass;
-            header("Location: chains.php");        
+    if (isset($_POST["silkroad_host"]) && isset($_POST["silkroad_login"]) && isset($_POST["silkroad_pass"])) {
+        $link = mysql_connect($_POST["silkroad_host"], $_POST["silkroad_login"], $_POST["silkroad_pass"]);
+        if ($link != false) {
+            if (mysql_select_db("silkroad", $link)) {
+                session_start();
+                $_SESSION["silkroad_host"] = $_POST["silkroad_host"];
+                $_SESSION["silkroad_login"] = $_POST["silkroad_login"];
+                $_SESSION["silkroad_pass"] = $_POST["silkroad_pass"];
+                header("Location: chains.php");
+                exit;
+            } else {
+                echo "<div>Incorrect host/login/pass. <a href=\"./login.php\">Try again</a></div>";
+                exit;
+            }
         } else {
-            mysql_close($link);
             echo "<div>Incorrect host/login/pass. <a href=\"./login.php\">Try again</a></div>";
+            exit;
         }
-    } else {
-        echo "<div>Incorrect host/login/pass. <a href=\"./login.php\">Try again</a></div>";
     }
+    if (isset($_GET["action"]) && ($_GET["action"] == "logout")) {
+        session_start();
+        session_destroy();
+        header("Location: login.php?action=logged_out");
+        exit;
+    }
+    if (isset($_REQUEST[session_name()])) session_start();
+    if (isset($_SESSION["silkroad_host"]) && isset($_SESSION["silkroad_login"]) && isset($_SESSION["silkroad_pass"])) return;
+    else header("Location: login.php?action=pls_choose");
+    exit;
 ?>
 

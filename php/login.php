@@ -1,9 +1,20 @@
 <?php
+    if (isset($_REQUEST[session_name()])) session_start();
+    if (isset($_SESSION["silkroad_host"]) && isset($_SESSION["silkroad_login"]) && isset($_SESSION["silkroad_pass"])) {
+        Header("Location: chains.php");
+        exit;
+    }
     require("./smarty_silkroadacp.php");
     $smarty = new SmartySilkRoadACP();
     $smarty->assign("css_files", array("global.css"));
     $smarty->display("header.tpl");
     $smarty->display("body.tpl");
+    if (isset($_GET["action"])) {
+        if ($_GET["action"] == "pls_choose")
+            echo "<center><div style=\"color: red;\">In order to use SilkRoadACP You should specify following params:</div></center>";
+        if ($_GET["action"] == "logged_out")
+            echo "<center><div style=\"color: blue;\">You were successfully logged out.</div></center>";
+    }
     echo "
         <center>
             <div class=\"login_page_form\">

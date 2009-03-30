@@ -1,20 +1,33 @@
 // Insert chains into sortable DIV
 function build_chains(xml) {
-    var accumulator = "";
-    $("Chain", xml).each(function(id) {
-        var chain = $("Chain", xml).get(id);
-        accumulator += "<div class=\"chain_container\">" + 
+    $("#chains_container div").remove();
+    $("NotRunning Chain", xml).each(function(id) {
+        var chain = $("NotRunning Chain", xml).get(id);
+        $("#chains_container").append("<div class=\"chain_container\">" + 
             "<table width=\"100%\"><tr>" + 
             "<td width=\"10%\">" + $("ID", chain).text() + "</td>" + 
             "<td width=\"30%\"><b>" + $("Name", chain).text() + "</b></td>" + 
             "<td width=\"20%\">" + $("Machine", chain).text() + "</td>" + 
             "<td width=\"20%\">" + $("Config", chain).text() + "</td>" + 
             "<td width=\"10%\">" + $("IsCompleted", chain).text() + "</td>" + 
-            "<td width=\"10%\"><a class=\"td_delete_chain\">X</a></td>" + 
+            "<td width=\"10%\"><input type=\"checkbox\" id=\"remove_" + $("ID", chain).text() +"\" class=\"remove_this_chain\">" +
+            "</tr></table></div>");
+    });
+    var accumulator = "";
+    $("Running Chain", xml).each(function(id) {
+        var chain = $("Running Chain", xml).get(id);
+        accumulator += "<div class=\"running_chain_container\">" + 
+            "<table width=\"100%\"><tr>" + 
+            "<td width=\"10%\">" + $("ID", chain).text() + "</td>" + 
+            "<td width=\"40%\"><b>" + $("Name", chain).text() + "</b><u> is running</u></td>" + 
+            "<td width=\"20%\">" + $("Machine", chain).text() + "</td>" + 
+            "<td width=\"20%\">" + $("Config", chain).text() + "</td>" + 
+            "<td width=\"10%\">" + $("IsCompleted", chain).text() + "</td>" + 
             "</tr></table></div>";
     });
-    $("#chains_container div").remove();
-    $("#chains_container").prepend(accumulator);
+    $("#running_chains_container div").remove();
+    $("#running_chains_container").prepend(accumulator);
+    $("b.remove_this_chain").trigger("click");
 }
 
 function build_form_add(xml) {
