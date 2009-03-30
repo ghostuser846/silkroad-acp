@@ -3,14 +3,18 @@ function build_chains(xml) {
     $("#chains_container div").remove();
     $("NotRunning Chain", xml).each(function(id) {
         var chain = $("NotRunning Chain", xml).get(id);
-        $("#chains_container").append("<div class=\"chain_container\">" + 
+        var class_ = "chain_container";
+        if ($("IsCompleted", chain).text() == "1") class_ = "chain_container_completed";
+        $("#chains_container").append("<div id=\"chainwithid_" + 
+            $("ID", chain).text() + "\" class=\"" + class_ + "\">" + 
             "<table width=\"100%\"><tr>" + 
             "<td width=\"10%\">" + $("ID", chain).text() + "</td>" + 
             "<td width=\"30%\"><b>" + $("Name", chain).text() + "</b></td>" + 
             "<td width=\"20%\">" + $("Machine", chain).text() + "</td>" + 
             "<td width=\"20%\">" + $("Config", chain).text() + "</td>" + 
             "<td width=\"10%\">" + $("IsCompleted", chain).text() + "</td>" + 
-            "<td width=\"10%\"><input type=\"checkbox\" id=\"remove_" + $("ID", chain).text() +"\" class=\"remove_this_chain\">" +
+            "<td width=\"10%\"><input type=\"checkbox\" id=\"remove_" + 
+            $("ID", chain).text() +"\" class=\"remove_this_chain\">" +
             "</tr></table></div>");
     });
     var accumulator = "";
@@ -50,6 +54,7 @@ function build_form_add(xml) {
     $("#add_form_iscompleted").append("<option value=\"0\">0</option><option value=\"1\">1</option>");
     $("#form_add, #button_add_cancel, #button_add_ok").toggle("slow");
     $(".button").toggle("fast");
+    $("#button_accept_rotations").toggle("fast");
 }
 
 function is_ok(xml) {
