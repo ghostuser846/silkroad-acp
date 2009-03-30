@@ -20,12 +20,22 @@ $(document).ready(function(e) {
     });
     $("#form_container div#button_get").bind("click", function(e) {
         $("#chains_container div").remove();
+        $("#running_chains_container div").remove();
+        $("#chains_delete_zone div").remove();
         $("#chains_container").prepend("<div class=\"message_container\">loading ...</div>");
+        $("#running_chains_container").prepend("<div class=\"message_container\">loading ...</div>");
         $.post("../php/get_test_chains.php", {
             action: "get_chains"
             }, function(xml) {
                 build_chains(xml);
         });
+    });
+    $("#form_container div#button_delete").bind("click", function(e) {
+        var counter = 0;
+        $("input.remove_this_chain:checked").each(function() {
+            counter++;
+        });
+        alert(counter);
     });
     $("#form_container div#button_add").bind("click", function(e) {
         $("#form_container").prepend("<div class=\"message_container\">loading ...</div>");
@@ -57,11 +67,6 @@ $(document).ready(function(e) {
         $("#form_container #form_add select.form_add_select option").remove();
         $("#form_container div#button_get").trigger("click");
     });
-    $("a.td_delete_chain").bind("click", function(e) {
-        alert("td");
-        var retval = confirm("Are you sure you want to delete this chain?");
-        if (retval) alert("ok");
-        else alert("cancel");
-    });
+    $("#form_container div#button_get").trigger("click");
 });
 
