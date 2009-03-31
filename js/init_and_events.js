@@ -44,10 +44,10 @@ $(document).ready(function(e) {
             s = s.substring(0, s.length - 1);
             $.post("../php/get_test_chains.php", {
                 action: "rotate_chains",
-                rotations: s,
+                rotations: s
                 }, function(xml) {
-                    if (is_ok(xml)) alert("Chain(s) was(were) deleted successfully");
-                    else alert("Error while deleting chain(s)");
+                    if (is_ok(xml)) alert("Chains were rotated successfully");
+                    else alert("Error while rotating chain");
             });
         }
         is_rotating = false;
@@ -75,7 +75,7 @@ $(document).ready(function(e) {
             if (accept) {                
                 $.post("../php/get_test_chains.php", {
                     action: "delete_following",
-                    chains: s,
+                    chains: s
                     }, function(xml) {
                         $("#form_container div#button_get").trigger("click");
                         if (is_ok(xml)) alert("Chain(s) was(were) deleted successfully");
@@ -90,7 +90,7 @@ $(document).ready(function(e) {
             accept = confirm("Do you want to delete running chains too?")
             if (accept) {
                 $.post("../php/get_test_chains.php", {
-                    action: "delete_all",
+                    action: "delete_all"
                     }, function(xml) {
                         $("#form_container div#button_get").trigger("click");
                         if (is_ok(xml)) alert("All chains were deleted successfully");
@@ -98,7 +98,7 @@ $(document).ready(function(e) {
                 });
             } else {
                 $.post("../php/get_test_chains.php", {
-                    action: "delete_not_running",
+                    action: "delete_not_running"
                     }, function(xml) {
                         $("#form_container div#button_get").trigger("click");
                         if (is_ok(xml)) alert("Chain was added successfully");

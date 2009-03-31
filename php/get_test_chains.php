@@ -196,7 +196,7 @@
                             on {$table_testplans}.testcaseid = first_join.id);";
         $result = mysql_query($query, $link);
         if (!$result) {
-            die("Can't fetch data from {$table_testchains}: " . mysql_error());
+            send_xml_fail_and_exit();
         }
         while ($chain = mysql_fetch_array($result)) {
             // fill current data
@@ -205,7 +205,7 @@
             $temp[] = $chain[0];
         }
         if (count($temp) != count($new_rotation_arr)) {
-            die("They are not equal!!");
+            send_xml_fail_and_exit();
         } else {
             // build mapping
             for ($i = 0; $i < count($new_rotation_arr); $i++)
@@ -216,11 +216,25 @@
             // so, rotate them
             // former id ($key) should contain new data from $value id
             if ($key != $value) {
-                $result = mysql_query("update {$table_testchains} set machineid = {$current_content[$value][1]}, 
+                $query = "update {$table_testchains} set machineid = {$current_content[$value][1]}, 
                     testplanid = {$current_content[$value][2]}, configid = {$current_content[$value][3]}, 
-                    is_completed = {$current_content[$value][4]} where id = {$key};", $link);
+                    is_completed = {$current_content[$value][4]} where id = {$key};";
+                $result = mysql_query($query, $link);
+                if (!$result)
+                    send_xml_fail_and_exit();
             }
+        echo "<?xml version=\"1.0\"?>\n";
+        echo "<RootElement>\n";
+        echo "\t<Status>OK</Status>\n";
+        echo "</RootElement>\n";
     }
     mysql_close($link);
+    function send_xml_fail_and_exit() {
+        echo "<?xml version=\"1.0\"?>\n";
+        echo "<RootElement>\n";
+        echo "\t<Status>Fail</Status>\n";
+        echo "</RootElement>\n";
+        exit;
+    }
 ?>
 
