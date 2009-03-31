@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--Created by Liquid XML Data Binding Libraries (www.liquid-technologies.com) for Liquid Technologies Limited-->
-<XmlStudioProjectOptions xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" Version="7.0.5.906">
-	<OpenFile Uri="C:\Users\int\Documents\Visual Studio 2008\Projects\FailsReport\Fails.xml"/>
-	<OpenFile Uri="C:\Users\int\Documents\Visual Studio 2008\Projects\FailsReport\Fails.xsd"/>
-	<OpenFile Uri="C:\Users\int\Documents\Visual Studio 2008\Projects\FailsReport\Fails.xslt"/>
-	<OpenFile Uri="C:\Users\int\Documents\Visual Studio 2008\Projects\FailsReport\main.js"/>
-</XmlStudioProjectOptions>
