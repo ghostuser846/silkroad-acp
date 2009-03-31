@@ -12,7 +12,7 @@ $(document).ready(function(e) {
                 break;
             }
             case "Executed TCs": {
-                document.location = "executed_tc.php";
+                document.location = "executed_tcs.php";
                 break;
             }
             default: {
