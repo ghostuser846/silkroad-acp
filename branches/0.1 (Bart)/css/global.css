@@ -1,0 +1,44 @@
+.page_footer {
+    text-align: right;
+    font-style: italic;
+    margin: 10px;
+}
+.login_page_form {
+    border: 3px solid black;
+    text-align: center;
+    width: 200px;
+}
+.main_menu_element {
+    float: left;
+    font: 14pt bold times;
+    border: 3px solid black;
+    margin: 5px;
+    padding: 3px;
+    cursor: pointer;
+}
+.clear {
+    clear: both;
+}
+#main_menu {
+    border-left: 3px solid black;
+    border-right: 3px solid black;
+    border-bottom: 3px solid black;
+    margin: 0 10px 10px 10px;
+}
+#body_keeper {
+    border: 3px solid black;
+    margin: 0 10px 10px 10px;
+    padding: 5px;
+}
+.space_with_page_name {
+    text-align: left;
+    margin: 0 10px 10px 10px;
+    padding: 5px;
+    font: 15pt times;
+    font-style: italic;
+}
+#session_data_and_logout {
+    text-align: right;
+    margin: 0 10px 10px 10px;
+}
+
