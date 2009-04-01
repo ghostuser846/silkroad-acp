@@ -75,6 +75,46 @@ $(document).ready(function(e) {
             alert("Please, provide correct TestRun value. It has to be up to 10 digits.")
             return;
         }
+        if (!($("#checkbox_passed").attr("checked") || $("#checkbox_failed").attr("checked") || $("#checkbox_nc").attr("checked"))) {
+            alert("Specify at least one status.")
+            return;
+        }
+        var fromDate = "";
+        var toDate = "";
+        var isPassed = "";
+        var isFailed = "";
+        var isNotCompleted = "";
+        var testPlans = "";
+        var testRun = "";
+        var statuses = "";
+        ($("#date_from").val() != "") ? (fromDate = $("#date_from").val()) : (fromDate = "na");
+        ($("#date_to").val() != "") ? (toDate = $("#date_to").val()) : (toDate = "na");
+        ($("#checkbox_passed").attr("checked")) ? (isPassed = "y") : (isPassed = "n");
+        ($("#checkbox_failed").attr("checked")) ? (isFailed = "y") : (isFailed = "n");
+        ($("#checkbox_nc").attr("checked")) ? (isNotCompleted = "y") : (isNotCompleted = "n");
+        ($("#testrun_textfield").val() != "") ? (testRun = $("#testrun_textfield").val()) : (testRun = "na");
+        $("#specify_testplans input.hidden_id:hidden").each(function() {
+            testPlans += $(this).val() + ",";
+        });
+        (testPlans == "") ? (testPlans = "na") : (testPlans = testPlans.substring(0, testPlans.length - 1));
+        /*alert("from: " + fromDate + "\n" + 
+                "to: " + toDate + "\n" +
+                "passed: " + isPassed + "\n" +
+                "failed: " + isFailed + "\n" +
+                "nc: " + isNotCompleted + "\n" +
+                "testrun: " + testRun + "\n" +
+                "plans: " + testPlans + "\n");*/
+        $.post("../php/get_executed_tcs.php", {
+            action: "get_tests",
+            from_date: fromDate,
+            to_date: toDate,
+            passed: isPassed,
+            failed: isFailed,
+            nc: isNotCompleted,
+            test_plans: testPlans,
+            test_run: testRun
+            }, function(xml) {
+        });
     });
     $("#number_choosed").text(getNumberOfChoosedTestPlans());
 });
