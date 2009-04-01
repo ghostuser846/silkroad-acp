@@ -21,5 +21,11 @@ $(document).ready(function(e) {
             }
         }
     });
+    $("div.button_action").bind("mouseenter", function(e) {
+        $(this).css("background-color", "red");
+    });
+    $("div.button_action").bind("mouseleave", function(e) {
+        $(this).css("background-color", "blue");
+    });
 });
 

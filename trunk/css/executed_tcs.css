@@ -1,5 +1,34 @@
 .search_area {
     border: 1px solid blue;
-    padding: 10px;
-    margin: 10px;
+    padding: 5px;
+    margin: 5px;
+}
+img.ui-datepicker-trigger {
+    cursor: pointer;
+}
+#dates {
+    float: left;
+    margin: 5px;
+    padding: 3px;
+}
+#testrun {
+    float: left;
+    margin: 5px;
+    padding: 3px;
+}
+#statuses {
+    float: left;
+    margin: 5px;
+    padding: 3px;
+}
+#specify_testplans {
+    float: left;
+    border: 1px solid black;
+    margin: 5px;
+    padding: 3px;
+    cursor: pointer;
+}
+#testplans_selector {
+    width: 100%;
+    height: 100%;
 }

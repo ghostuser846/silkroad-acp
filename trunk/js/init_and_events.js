@@ -15,12 +15,6 @@ $(document).ready(function(e) {
     $("#form_container div.button").bind("mouseleave", function(e) {
         $(this).css("background-color", "white");
     });
-    $("#form_container div.button_action").bind("mouseenter", function(e) {
-        $(this).css("background-color", "red");
-    });
-    $("#form_container div.button_action").bind("mouseleave", function(e) {
-        $(this).css("background-color", "blue");
-    });
     $("#form_container div#button_get").bind("click", function(e) {
         $("#chains_container div").remove();
         $("#running_chains_container div").remove();
