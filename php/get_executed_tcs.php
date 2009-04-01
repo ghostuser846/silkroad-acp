@@ -30,6 +30,16 @@
         echo "</RootElement>\n";
         mysql_free_result($result);
     }
+    if ($action == "get_tests") {
+        $query = "select et.testcaseid, t.testcase, et.status, et.testrunid, et.start_time, et.end_time, et.silk_log, et.srv_log, et.failure
+                    from executed_testcases et, testcases t
+                    where et.testcaseid = t.id
+                    and et.status in (1,2,3)
+                    and ((et.start_time >= '1000/01/01') or (et.start_time is null))
+                    and ((et.end_time <= '9999/12/31') or (et.end_time is null))
+                    and et.testrunid = 12402
+                    and et.testcaseid in (select testcaseid from testplans where testplanid in (2));";
+    }
 ?>
 
 
