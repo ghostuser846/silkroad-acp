@@ -81,39 +81,38 @@ $(document).ready(function(e) {
         }
         var fromDate = "";
         var toDate = "";
-        var isPassed = "";
-        var isFailed = "";
-        var isNotCompleted = "";
         var testPlans = "";
         var testRun = "";
         var statuses = "";
         ($("#date_from").val() != "") ? (fromDate = $("#date_from").val()) : (fromDate = "na");
         ($("#date_to").val() != "") ? (toDate = $("#date_to").val()) : (toDate = "na");
-        ($("#checkbox_passed").attr("checked")) ? (isPassed = "y") : (isPassed = "n");
-        ($("#checkbox_failed").attr("checked")) ? (isFailed = "y") : (isFailed = "n");
-        ($("#checkbox_nc").attr("checked")) ? (isNotCompleted = "y") : (isNotCompleted = "n");
+        ($("#checkbox_passed").attr("checked")) ? (statuses += "1,") : (statuses = statuses);
+        ($("#checkbox_failed").attr("checked")) ? (statuses += "2,") : (statuses = statuses);
+        ($("#checkbox_nc").attr("checked")) ? (statuses += "3,") : (statuses = statuses);
         ($("#testrun_textfield").val() != "") ? (testRun = $("#testrun_textfield").val()) : (testRun = "na");
         $("#specify_testplans input.hidden_id:hidden").each(function() {
             testPlans += $(this).val() + ",";
         });
         (testPlans == "") ? (testPlans = "na") : (testPlans = testPlans.substring(0, testPlans.length - 1));
+        statuses = statuses.substring(0, statuses.length - 1);
         /*alert("from: " + fromDate + "\n" + 
                 "to: " + toDate + "\n" +
-                "passed: " + isPassed + "\n" +
-                "failed: " + isFailed + "\n" +
-                "nc: " + isNotCompleted + "\n" +
+                "statuses: " + statuses + "\n" +
                 "testrun: " + testRun + "\n" +
                 "plans: " + testPlans + "\n");*/
+        $("#testcases div").remove();
+        $("#testcases").append("<div class=\"message_container\">loading ...</div>");
         $.post("../php/get_executed_tcs.php", {
             action: "get_tests",
             from_date: fromDate,
             to_date: toDate,
-            passed: isPassed,
-            failed: isFailed,
-            nc: isNotCompleted,
+            statuses: statuses,
             test_plans: testPlans,
             test_run: testRun
             }, function(xml) {
+                build_tests(xml);
+                $("#testcases .test_container").toggle("fast");
+                $("#testcases .run_container").toggle("fast");
         });
     });
     $("#number_choosed").text(getNumberOfChoosedTestPlans());
@@ -136,5 +135,23 @@ function getNumberOfChoosedTestPlans() {
         count++;
     });
     return count;
+}
+
+function build_tests(xml) {
+    var plan_id = 0;
+    var run_id = 0;
+    $("#testcases div.message_container").remove();
+    $("TestPlan", xml).each(function(id) {
+        var plan = $("TestPlan", xml).get(id);
+        $("#testcases").append("<div id=\"plan_container_" + plan_id++ + "\" class=\"plan_container\">" + $("PlanName", plan).text() + "</div>");
+        $("TestRun", plan).each(function(id) {
+            var run = $("TestRun", plan).get(id);
+            $("#plan_container_" + (plan_id - 1)).append("<div id=\"run_container_" + run_id++ + "\" class=\"run_container\">" + $("RunNumber", run).text());
+            $("TestCase", run).each(function(id) {
+                var test = $("TestCase", run).get(id);
+                $("#run_container_" + (run_id - 1)).append("<div class=\"test_container\">" + $("ID", test).text() + "</div>");
+            });
+        });
+    });
 }
 
