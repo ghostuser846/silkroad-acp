@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.22, created on 2009-04-02 06:45:05
+<?php /* Smarty version 2.6.22, created on 2009-04-03 07:17:18
          compiled from body_executed_tcs.tpl */ ?>
 <form>
     <div id="main_search_area" class="search_area">
@@ -16,16 +16,15 @@
         <div id="testrun">
             TestRun: <input id="testrun_textfield" name="testrun_textfield_name" type="text" size="10" maxlength="10" />
         </div>
-        <div class="clear"></div>
         <div id="search_buttons">
             <div class="button_action" id="search_button_search">Search</div>
             <div class="button_action" id="search_button_clear">Clear</div>
             <div class="clear"></div>
         </div>
+        <div class="clear"></div>
     </div>
 </form>
 <div id="testcases"></div>
 <div id="dialog_choose_testplans">
     <select id="testplans_selector" multiple="multiple" />
-</div>
-
+</div>
