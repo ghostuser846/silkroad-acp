@@ -33,13 +33,39 @@ img.ui-datepicker-trigger {
     height: 100%;
 }
 #testcases .plan_container {
-    border: 1px solid green;
     text-align: center;
+}
+#testcases .plan_container_name {
+    background-color: #CCCCCC;
+    cursor: pointer;
 }
 #testcases .run_container {
-    border: 1px solid yellow;
-    text-align: center;
+}
+#testcases .run_container_number {
+    background-color: #DDDDDD;
+    cursor: pointer;
 }
 #testcases .test_container {
-    text-align: center;
 }
+div.search_result {
+    text-align: right;
+    font: bold 12pt serif;
+}
+.selected_plan_run {
+    border: 1px solid red;
+}
+#next_page {
+    cursor: pointer;
+    text-decoration: underline;
+}
+#prev_page {
+    cursor: pointer;
+    text-decoration: underline;
+}
+#next_prev_page {
+    text-align: right;
+}
+#plan_of {
+    font: bold 10pt serif;
+}
+

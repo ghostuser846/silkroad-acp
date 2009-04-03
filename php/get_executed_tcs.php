@@ -35,8 +35,8 @@
         if ($to_date == "na") $to_date = "9999/12/31";
         if ($test_plans == "na") $test_plans = "select id from testplan_names";
         if ($test_run == "na") $test_run = "select id from testruns";
-        $query = "select tpn.name, et.testrunid, et.testcaseid, t.testcase, et.status, et.start_time, 
-                    et.end_time, et.silk_log, et.srv_log, et.failure
+        //et.silk_log, et.srv_log, et.failure
+        $query = "select tpn.name, et.testrunid, et.testcaseid, t.testcase, et.status, et.start_time, et.end_time
                     from executed_testcases et, testcases t, testplans tp, testplan_names tpn
                     where et.testcaseid = t.id
                     and tp.testcaseid = et.testcaseid
@@ -50,15 +50,19 @@
                     order by tpn.name asc, et.testrunid asc;";
         $result = mysql_query($query, $link);
         if (!$result) die("Query to show fields from table failed: " . mysql_error());
+        $num_rows = mysql_num_rows($result);
+        $num_plans = 0;
         echo "<?xml version=\"1.0\"?>\n";
         echo "<RootElement>\n";
+        echo "\t<Count>$num_rows</Count>\n";
         $chain_plan = "null_plan";
         $chain_run = "null_run";
         $end_plan = false;
         while ($chain = mysql_fetch_array($result)) {
             if ($chain[0] != $chain_plan) {
+                $num_plans++;
                 if ($chain_plan != "null_plan") { echo "\t\t</TestRun>\n\t</TestPlan>\n"; $end_plan = true; }
-                echo "\t<TestPlan>\n";
+                echo "\t<TestPlan seq=\"$num_plans\">\n";
                 echo "\t\t<PlanName>$chain[0]</PlanName>\n";
                 $chain_plan = $chain[0];
             }
@@ -80,8 +84,8 @@
             //echo "\t\t\t\t<Failure>$chain[9]</Failure>\n";
             echo "\t\t\t</TestCase>\n";
         }
-        echo "\t\t</TestRun>\n";
-        echo "\t</TestPlan>\n";
+        if ($num_rows != 0) echo "\t\t</TestRun>\n\t</TestPlan>\n";
+        echo "\t<Plans>$num_plans</Plans>\n";
         echo "</RootElement>\n";
         mysql_free_result($result);
     }
