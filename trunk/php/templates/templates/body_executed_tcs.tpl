@@ -14,16 +14,15 @@
         <div id="testrun">
             TestRun: <input id="testrun_textfield" name="testrun_textfield_name" type="text" size="10" maxlength="10" />
         </div>
-        <div class="clear"></div>
         <div id="search_buttons">
             <div class="button_action" id="search_button_search">Search</div>
             <div class="button_action" id="search_button_clear">Clear</div>
             <div class="clear"></div>
         </div>
+        <div class="clear"></div>
     </div>
 </form>
 <div id="testcases"></div>
 <div id="dialog_choose_testplans">
     <select id="testplans_selector" multiple="multiple" />
 </div>
-
