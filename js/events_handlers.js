@@ -1,6 +1,8 @@
-// Insert chains into sortable DIV
+// Insert chains into sortable div
 function build_chains(xml) {
+    // Clear container
     $("#chains_container div").remove();
+    // Build NotRunning chains
     $("NotRunning Chain", xml).each(function(id) {
         var chain = $("NotRunning Chain", xml).get(id);
         var class_ = "chain_container";
@@ -17,6 +19,7 @@ function build_chains(xml) {
             $("ID", chain).text() +"\" class=\"remove_this_chain\">" +
             "</tr></table></div>");
     });
+    // Build running chains
     var accumulator = "";
     $("Running Chain", xml).each(function(id) {
         var chain = $("Running Chain", xml).get(id);
@@ -31,9 +34,9 @@ function build_chains(xml) {
     });
     $("#running_chains_container div").remove();
     $("#running_chains_container").prepend(accumulator);
-    $("b.remove_this_chain").trigger("click");
 }
 
+// Build form for adding new chain
 function build_form_add(xml) {
     $("#form_container #form_add select.form_add_select option").remove();
     $("Machines Element", xml).each(function(id) {
@@ -57,6 +60,7 @@ function build_form_add(xml) {
     $("#button_accept_rotations").toggle("fast");
 }
 
+// Verify server's status xml
 function is_ok(xml) {
     if ($("Status", xml).text() == "OK")
         return true;
