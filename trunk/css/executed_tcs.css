@@ -68,4 +68,8 @@ div.search_result {
 #plan_of {
     font: bold 10pt serif;
 }
-
+span.view_logs {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+}
