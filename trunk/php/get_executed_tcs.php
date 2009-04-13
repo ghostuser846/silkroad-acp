@@ -36,7 +36,7 @@
         if ($test_plans == "na") $test_plans = "select id from testplan_names";
         if ($test_run == "na") $test_run = "select id from testruns";
         //et.silk_log, et.srv_log, et.failure
-        $query = "select tpn.name, et.testrunid, et.testcaseid, t.testcase, et.status, et.start_time, et.end_time
+        $query = "select tpn.name, et.testrunid, et.testcaseid, t.testcase, et.status, et.start_time, et.end_time, et.id
                     from executed_testcases et, testcases t, testplans tp, testplan_names tpn
                     where et.testcaseid = t.id
                     and tp.testcaseid = et.testcaseid
@@ -79,6 +79,7 @@
             echo "\t\t\t\t<Status>$chain[4]</Status>\n";
             echo "\t\t\t\t<Start>$chain[5]</Start>\n";
             echo "\t\t\t\t<End>$chain[6]</End>\n";
+            echo "\t\t\t\t<ETID>$chain[7]</ETID>\n";
             //echo "\t\t\t\t<SilkLog>$chain[7]</SilkLog>\n";
             //echo "\t\t\t\t<SrvLog>$chain[8]</SrvLog>\n";
             //echo "\t\t\t\t<Failure>$chain[9]</Failure>\n";
@@ -86,6 +87,19 @@
         }
         if ($num_rows != 0) echo "\t\t</TestRun>\n\t</TestPlan>\n";
         echo "\t<Plans>$num_plans</Plans>\n";
+        echo "</RootElement>\n";
+        mysql_free_result($result);
+    }
+    if ($action == "get_logs") {
+        $query = "select silk_log, srv_log, failure from executed_testcases where id = {$et_id}";
+        $result = mysql_query($query, $link);
+        if (!$result) die("Query to show fields from table failed: " . mysql_error());
+        echo "<?xml version=\"1.0\"?>\n";
+        echo "<RootElement>\n";
+        $logs = mysql_fetch_array($result);
+        echo "\t<SilkLog>$logs[0]</SilkLog>\n";
+        echo "\t<SrvLog>$logs[1]</SrvLog>\n";
+        echo "\t<Failure>$logs[2]</Failure>\n";
         echo "</RootElement>\n";
         mysql_free_result($result);
     }
