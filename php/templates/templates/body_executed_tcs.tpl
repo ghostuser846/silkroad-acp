@@ -23,6 +23,16 @@
     </div>
 </form>
 <div id="testcases"></div>
+<div id="dialog_view_logs">
+    <div id="logs_accordion">
+        <h3><a href="#">Silk logs</a></h3>
+        <div id="logs_from_silk"></div>
+        <h3><a href="#">Server logs</a></h3>
+        <div id="logs_from_server"></div>
+        <h3><a href="#">Failure</a></h3>
+        <div id="logs_failure"></div>
+    </div>
+</div>
 <div id="dialog_choose_testplans">
     <select id="testplans_selector" multiple="multiple" />
 </div>
