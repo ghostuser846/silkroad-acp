@@ -57,6 +57,26 @@ $(document).ready(function(e) {
             $("#number_choosed").text(getNumberOfChoosedTestPlans());            
         }
     });
+    // Initialize dialog "View Logs"
+    $("#dialog_view_logs").dialog({
+        bgiframe: true,
+        modal: true,
+        height: 400,
+        width: 600,
+        closeOnEscape: true,
+        autoOpen: false,
+        hide: "explode",
+        show: "fold",
+        title: "View Logs",
+        buttons: {
+            "OK": function() {
+                $(this).dialog("close");
+            },
+        }
+    });
+    // Initialize accordion for View Logs dialog
+    $("#logs_accordion").accordion({autoHeight: false, clearStyle: true});
+
     $("#specify_testplans").bind("click", function(e) {
         $("#dialog_choose_testplans").dialog("open");
         $.post("../php/get_executed_tcs.php", {
@@ -182,12 +202,13 @@ function build_tests(xml) {
                 even = true;
                 $("TestCase", run).each(function(id) {
                     var test = $("TestCase", run).get(id);
-                    var table = "<table><tr>" + 
+                    var table = "<table><tr id=\"" + $("ETID", test).text() + "\">" + 
                         "<td width=\"10%\">" + $("ID", test).text() + "<td>" + 
                         "<td width=\"60%\">" + $("Name", test).text() + "<td>" + 
-                        "<td width=\"10%\">" + $("Status", test).text() + "<td>" + 
+                        "<td width=\"5%\">" + $("Status", test).text() + "<td>" + 
                         "<td width=\"10%\">" + $("Start", test).text() + "<td>" + 
                         "<td width=\"10%\">" + $("End", test).text() + "<td>" + 
+                        "<td width=\"5%\"><span class=\"view_logs\">Logs</span><td>" + 
                         "</tr></table>";
                     if (even) { 
                         $("#run_container_" + (run_id - 1)).append("<div class=\"test_container\">" + 
@@ -246,6 +267,17 @@ function build_tests(xml) {
     $("#prev_page").bind("click", function() {
         current_page--;
         build_tests(ajax_xml);
+    });
+    $("span.view_logs").bind("click", function() {
+        $.post("../php/get_executed_tcs.php", {
+            action: "get_logs",
+            et_id: $(this).parent().parent().attr("id")
+            }, function(xml) {
+                $("#logs_from_silk").text($(xml, "/RootElement/SilkLog").text());
+                $("#logs_from_server").text($(xml, "/RootElement/SrvLog").text());
+                $("#logs_failure").text($(xml, "/RootElement/Failure").text());
+                $("#dialog_view_logs").dialog("open");
+        });
     });
 }
 
