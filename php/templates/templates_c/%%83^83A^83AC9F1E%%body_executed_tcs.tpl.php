@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.22, created on 2009-04-03 07:17:18
+<?php /* Smarty version 2.6.22, created on 2009-04-13 05:55:24
          compiled from body_executed_tcs.tpl */ ?>
 <form>
     <div id="main_search_area" class="search_area">
@@ -25,6 +25,16 @@
     </div>
 </form>
 <div id="testcases"></div>
+<div id="dialog_view_logs">
+    <div id="logs_accordion">
+        <h3><a href="#">Silk logs</a></h3>
+        <div id="logs_from_silk"></div>
+        <h3><a href="#">Server logs</a></h3>
+        <div id="logs_from_server"></div>
+        <h3><a href="#">Failure</a></h3>
+        <div id="logs_failure"></div>
+    </div>
+</div>
 <div id="dialog_choose_testplans">
     <select id="testplans_selector" multiple="multiple" />
 </div>
