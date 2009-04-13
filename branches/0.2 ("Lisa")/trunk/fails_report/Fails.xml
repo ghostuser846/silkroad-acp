@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Created with Liquid XML Studio - FREE Community Edition 7.0.5.906 (http://www.liquid-technologies.com) -->
+<?xml-stylesheet type="text/xsl" href="Fails.xslt"?>
+<Root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Fails.xsd">
+	<Date Value="2009-03-19">
+		<Fails Platform="WebLogic" Build="4.0.1.385">
+			<TestRun Name="PersonClipboard">
+				<Fail>
+					<TestName>person_clipboard_user_add</TestName>
+					<DBLog>null</DBLog>
+					<Description>не баг: небольшое пересечение данных из разных тестпланов привело к тому, что в schedule scope попал лишний человек; исправил</Description>
+				</Fail>
+				<Fail>
+					<TestName>person_clipboard_sql_injection</TestName>
+					<DBLog>null</DBLog>
+					<Description>то же, что и в предыдущем</Description>
+				</Fail>
+				<Fail>
+					<TestName>person_clipboard_clipboard_window_verification</TestName>
+					<DBLog>null</DBLog>
+					<Description>прогнал на 535 билде: pass</Description>
+				</Fail>
+				<Fail>
+					<TestName>person_clipboard_close_clipboard_window</TestName>
+					<DBLog>null</DBLog>
+					<Description>прогнал на 535 билде: pass</Description>
+				</Fail>
+				<Fail>
+					<TestName>person_clipboard_user_profile_update</TestName>
+					<DBLog>null</DBLog>
+					<Description>баг</Description>
+				</Fail>
+				<Fail>
+					<TestName>person_clipboard_user_add_deleted_user</TestName>
+					<DBLog>#Exception: *** Error: Window '[BrowserChild]Policy Atlas*' was not found||</DBLog>
+					<Description>тест прогнал на 535 билде: pass</Description>
+				</Fail>
+				<Fail>
+					<TestName>person_clipboard_request_affected_people_delete_user</TestName>
+					<DBLog>null</DBLog>
+					<Description>не баг, исправил, проверил на 535: pass</Description>
+				</Fail>
+			</TestRun>
+			<TestRun Name="EmployeePortal">
+				<Fail>
+					<TestName>employee_portal_verify_the_hold_notices</TestName>
+					<DBLog>null</DBLog>
+					<Description>тест имеет статус NotCompleted; причину выяснить уже невозможно, так как в логе никаких ошибок не обнаружено; прогнал на 535 - pass</Description>
+				</Fail>
+			</TestRun>
+		</Fails>
+		<Fails Platform="WebSphere" Build="4.0.1.385">
+			<TestRun Name="PersonClipboard">
+				<Fail>
+					<TestName>person_clipboard_user_add</TestName>
+					<DBLog>||#Exception: *** Error: Application not ready||Occured in WaitForReady  (1)||</DBLog>
+					<Description>тесты гонялись на наших машинах, что естественно много медленне, чем на той же psslab441, следовательно таймаут для WaitForReady был слишком мал, страница не успевала загрузиться и вылетала эта ошибка</Description>
+				</Fail>
+				<Fail>
+					<TestName>person_clipboard_user_add_large_number_of_users</TestName>
+					<DBLog>null</DBLog>
+					<Description>см. выше</Description>
+				</Fail>
+				<Fail>
+					<TestName>person_clipboard_clipboard_window_verification</TestName>
+					<DBLog>null</DBLog>
+					<Description>см. выше</Description>
+				</Fail>
+				<Fail>
+					<TestName>person_clipboard_close_clipboard_window</TestName>
+					<DBLog>null</DBLog>
+					<Description>прогнал на 535 билде: pass</Description>
+				</Fail>
+				<Fail>
+					<TestName>person_clipboard_user_profile_update</TestName>
+					<DBLog>null</DBLog>
+					<Description>баг</Description>
+				</Fail>
+				<Fail>
+					<TestName>person_clipboard_user_add_deleted_user</TestName>
+					<DBLog>||#Exception: *** Error: Application not ready||Occured in WaitForReady  (1)||</DBLog>
+					<Description>
+					</Description>
+				</Fail>
+				<Fail>
+					<TestName>person_clipboard_request_affected_people_delete_user</TestName>
+					<DBLog>null</DBLog>
+					<Description>не баг, исправил, проверил на 535: pass</Description>
+				</Fail>
+				<Fail>
+					<TestName>person_clipboard_clipboard_not_present_verification</TestName>
+					<DBLog>null</DBLog>
+					<Description>||#Exception: *** Error: Application not ready||Occured in WaitForReady  (1)||</Description>
+				</Fail>
+			</TestRun>
+			<TestRun Name="EmployeePortal">
+				<Fail>
+					<TestName>employee_portal_verify_the_hold_notices</TestName>
+					<DBLog>#Exception: *** Error: Application not ready||Occured in WaitForReady  (1)|</DBLog>
+					<Description>прогнал на 535 - pass</Description>
+				</Fail>
+			</TestRun>
+		</Fails>
+		<Fails Platform="JBoss" Build="4.0.1.536">
+			<TestRun Name="PersonClipboard">
+				<Fail>
+					<TestName>person_clipboard_user_profile_update</TestName>
+					<DBLog>null</DBLog>
+					<Description>баг</Description>
+				</Fail>
+				<Fail>
+					<TestName>person_clipboard_request_affected_people_delete_user</TestName>
+					<DBLog>null</DBLog>
+					<Description>не баг, исправил, проверил на 535: pass</Description>
+				</Fail>
+			</TestRun>
+		</Fails>
+	</Date>
+	<Date Value="2009-03-20">
+		<Fails Platform="WebLogic" Build="4.0.1.535">
+			<TestRun Name="Citations">
+				<Fail>
+					<TestName>citations_update_agencies_through_csv</TestName>
+					<DBLog>null</DBLog>
+					<Description>время сервера отличается от времени на той машине, где тесты гонялись на 1 час. поиск в логе производится по времени, поэтому тест не смог найти нужное сообщение, а оно там есть с временем на 1 час раньше</Description>
+                </Fail>
+				<Fail>
+					<TestName>citations_update_jurisdictions_through_csv</TestName>
+					<DBLog>null</DBLog>
+					<Description>то же, что и в предыдущем</Description>
+                </Fail>
+            </TestRun>
+        </Fails>
+		<Fails Platform="JBoss" Build="4.0.1.536">
+			<TestRun Name="LocalSchedules">
+				<Fail>
+					<TestName>local_schedules_adding_citations</TestName>
+					<DBLog>#Error: *** Error: Window '[HtmlPushButton]$schEdit:searchableOrgResourceChooser:searchOrgButton' was not found||</DBLog>
+					<Description>Изменился тег кнопки Search (с HtmlPushButton на HtmlText) в ResourceChooser на вкладке AdminOrganization на  странице создания schedule</Description>
+                </Fail>
+				<Fail>
+					<TestName>local_schedules_resourcechooser_search_functionality</TestName>
+					<DBLog>#Error: *** Error: Window '[HtmlPushButton]$schEdit:searchableOrgResourceChooser:searchOrgButton' was not found||</DBLog>
+					<Description>то же, что и в предыдущем</Description>
+                </Fail>
+				<Fail>
+					<TestName>local_schedules_create_mapping_to_class</TestName>
+					<DBLog>null</DBLog>
+					<Description>то же, что и в предыдущем</Description>
+                </Fail>
+				<Fail>
+					<TestName>local_schedules_create_copy_to_template</TestName>
+					<DBLog>null</DBLog>
+					<Description>то же, что и в предыдущем</Description>
+                </Fail>
+				<Fail>
+					<TestName>local_schedules_verify_retention_fields</TestName>
+					<DBLog>null</DBLog>
+					<Description>изменились теги у иконок collapse/enlarge в RetentionSchedule; прогнал на 559 - pass</Description>
+                </Fail>
+				<Fail>
+					<TestName>local_schedules_delete_schedule</TestName>
+					<DBLog>null</DBLog>
+					<Description>то же, что и в первых четырёх тестах</Description>
+                </Fail>
+				<Fail>
+					<TestName>local_schedules_display_of_policy_export_button</TestName>
+					<DBLog>#Error: Click method failed on window object Map.Search, exception raised: *** Error: Window '[HtmlPushButton]Search[2]' was not found||</DBLog>
+					<Description>изменился тег у кнопки Search на странице Map; исправил, проверил на 559</Description>
+                </Fail>
+				<Fail>
+					<TestName>local_schedules_data_sources_schedule_mapping_buttons_functionality</TestName>
+					<DBLog>null</DBLog>
+					<Description>баг</Description>
+                </Fail>
+				<Fail>
+					<TestName>local_schedules_policy_export_button_functionality</TestName>
+					<DBLog>null</DBLog>
+					<Description>тег кнопки Map.Search; исправил и нашёл баг</Description>
+                </Fail>
+				<Fail>
+					<TestName>local_schedules_xml_file_contents1</TestName>
+					<DBLog>null</DBLog>
+					<Description>тег кнопки Map.Search; исправил и нашёл баг</Description>
+                </Fail>
+				<Fail>
+					<TestName>local_schedules_createpage_buttons_functionality</TestName>
+					<DBLog>null</DBLog>
+					<Description>та же проблема, что и в первых четырёх тестах</Description>
+                </Fail>
+				<Fail>
+					<TestName>local_schedules_delete_schedule_with_multiple_versions</TestName>
+					<DBLog>null</DBLog>
+					<Description>та же проблема, что и в первых четырёх тестах</Description>
+                </Fail>
+				<Fail>
+					<TestName>local_schedules_hold_details</TestName>
+					<DBLog>null</DBLog>
+					<Description>та же проблема, что и в первых четырёх тестах</Description>
+                </Fail>
+				<Fail>
+					<TestName>local_schedules_workflow_approval_process_repository_mapping_edit</TestName>
+					<DBLog>null</DBLog>
+					<Description>баг</Description>
+                </Fail>
+            </TestRun>
+			<TestRun Name="ChangeAlert">
+				<Fail>
+					<TestName>change_alert_templateclass_create</TestName>
+					<DBLog>null</DBLog>
+					<Description>не баг, тест модифицровал, проверил на 559</Description>
+                </Fail>
+				<Fail>
+					<TestName>change_alert_templateclass_edit</TestName>
+					<DBLog>null</DBLog>
+					<Description>не баг, тест модифицровал, проверил на 559</Description>
+                </Fail>
+				<Fail>
+					<TestName>change_alert_schedules_create</TestName>
+					<DBLog>null</DBLog>
+					<Description>Изменился тег кнопки Search (с HtmlPushButton на HtmlText) в ResourceChooser на вкладке AdminOrganization на  странице создания schedule</Description>
+                </Fail>
+				<Fail>
+					<TestName>change_alert_schedules_edit</TestName>
+					<DBLog>null</DBLog>
+					<Description>Изменился тег кнопки Search (с HtmlPushButton на HtmlText) в ResourceChooser на вкладке AdminOrganization на  странице создания schedule</Description>
+                </Fail>
+            </TestRun>
+			<TestRun Name="Admin_InterviewQuestionnaire">
+				<Fail>
+					<TestName>interview_questionnaire_create_required_fields</TestName>
+					<DBLog>||#Error: Click method failed on window object PolicyAtlas.tabAdmin, exception raised: *** Error: Agent returned an invalid response||</DBLog>
+					<Description>видимо, агент заглючил, так как успешно прогнал тест на 559 билде</Description>
+                </Fail>
+            </TestRun>
+        </Fails>
+    </Date>
+</Root>

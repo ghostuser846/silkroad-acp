@@ -1,0 +1,75 @@
+.search_area {
+    border: 1px solid blue;
+    padding: 5px;
+    margin: 5px;
+}
+img.ui-datepicker-trigger {
+    cursor: pointer;
+}
+#dates {
+    float: left;
+    margin: 5px;
+    padding: 3px;
+}
+#testrun {
+    float: left;
+    margin: 5px;
+    padding: 3px;
+}
+#statuses {
+    float: left;
+    margin: 5px;
+    padding: 3px;
+}
+#specify_testplans {
+    float: left;
+    border: 1px solid black;
+    margin: 5px;
+    padding: 3px;
+    cursor: pointer;
+}
+#testplans_selector {
+    width: 100%;
+    height: 100%;
+}
+#testcases .plan_container {
+    text-align: center;
+}
+#testcases .plan_container_name {
+    background-color: #CCCCCC;
+    cursor: pointer;
+}
+#testcases .run_container {
+}
+#testcases .run_container_number {
+    background-color: #DDDDDD;
+    cursor: pointer;
+}
+#testcases .test_container {
+}
+div.search_result {
+    text-align: right;
+    font: bold 12pt serif;
+}
+.selected_plan_run {
+    border: 1px solid red;
+}
+#next_page {
+    cursor: pointer;
+    text-decoration: underline;
+}
+#prev_page {
+    cursor: pointer;
+    text-decoration: underline;
+}
+#next_prev_page {
+    text-align: right;
+}
+#plan_of {
+    font: bold 10pt serif;
+}
+span.view_logs {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+}
