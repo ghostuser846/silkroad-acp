@@ -97,9 +97,12 @@
         echo "<?xml version=\"1.0\"?>\n";
         echo "<RootElement>\n";
         $logs = mysql_fetch_array($result);
-        echo "\t<SilkLog>$logs[0]</SilkLog>\n";
-        echo "\t<SrvLog>$logs[1]</SrvLog>\n";
-        echo "\t<Failure>$logs[2]</Failure>\n";
+        $log0 = htmlspecialchars($logs[0]);
+        $log1 = htmlspecialchars($logs[1]);
+        $log2 = htmlspecialchars($logs[2]);
+        echo "\t<SilkLog>$log0</SilkLog>\n";
+        echo "\t<SrvLog>$log1</SrvLog>\n";
+        echo "\t<Failure>$log2</Failure>\n";
         echo "</RootElement>\n";
         mysql_free_result($result);
     }
