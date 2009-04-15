@@ -273,9 +273,9 @@ function build_tests(xml) {
             action: "get_logs",
             et_id: $(this).parent().parent().attr("id")
             }, function(xml) {
-                $("#logs_from_silk").text($(xml, "/RootElement/SilkLog").text());
-                $("#logs_from_server").text($(xml, "/RootElement/SrvLog").text());
-                $("#logs_failure").text($(xml, "/RootElement/Failure").text());
+                $("#logs_from_silk").text($("SilkLog", xml).text());
+                $("#logs_from_server").text($("SrvLog", xml).text());
+                $("#logs_failure").text($("Failure", xml).text());
                 $("#dialog_view_logs").dialog("open");
         });
     });

@@ -17,6 +17,10 @@ $(document).ready(function(e) {
                 document.location = "executed_tcs.php";
                 break;
             }
+            case "Run Transporter": {
+                document.location = "run_transporter.php";
+                break;
+            }
             default: {
                 document.location = "login.php";
                 break;
@@ -28,7 +32,7 @@ $(document).ready(function(e) {
         $(this).css("background-color", "red");
     });
     $("div.button_action").bind("mouseleave", function(e) {
-        $(this).css("background-color", "blue");
+        $(this).css("background-color", "#6699FF");
     });
 });
 
