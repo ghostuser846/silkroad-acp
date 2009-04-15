@@ -14,5 +14,9 @@
             <div id="body_keeper">
             {include file="body_executed_tcs.tpl"}
         {/if}
+        {if $body == "run_transporter"}
+            <div id="body_keeper">
+            {include file="body_run_transporter.tpl"}
+        {/if}
     {/foreach}
 
