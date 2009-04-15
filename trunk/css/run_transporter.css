@@ -1,0 +1,11 @@
+.bad_connect {
+    color: red;
+}
+
+.good_connect {
+    color: green;
+}
+
+#dialog_view_log {
+    white-space: pre;
+}
