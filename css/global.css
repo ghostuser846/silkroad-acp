@@ -7,6 +7,7 @@
     border: 3px solid black;
     text-align: center;
     width: 200px;
+    padding: 5px;
 }
 .main_menu_element {
     float: left;
